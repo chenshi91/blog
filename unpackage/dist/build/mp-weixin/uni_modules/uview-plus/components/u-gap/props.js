@@ -1,0 +1,1 @@
+"use strict";const r=require("../../libs/config/props.js"),t={props:{bgColor:{type:String,default:()=>r.defProps.gap.bgColor},height:{type:[String,Number],default:()=>r.defProps.gap.height},marginTop:{type:[String,Number],default:()=>r.defProps.gap.marginTop},marginBottom:{type:[String,Number],default:()=>r.defProps.gap.marginBottom}}};exports.props=t;

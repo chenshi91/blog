@@ -1,0 +1,109 @@
+{
+	"bsonType": "object",
+	"required": ["article_id", "user_id", "comment_content",  "comment_type"],
+	"permission": {
+		"read": true,
+		// "create": "auth.uid != null && get(`database.opendb-news-articles.${doc.article_id}`).comment_status == 1",
+		"create":"auth.uid != null",
+		"update": "doc.user_id == auth.uid",
+		"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（文章 ID），系统自动生成"
+		},
+		"article_id": {
+			"title": "评论的文章",
+			"bsonType": "string",
+			"description": "文章ID，opendb-news-posts 表中的`_id`字段",
+			"foreignKey": "opendb-news-articles._id",
+			"enum":{
+				"collection": "opendb-news-articles",
+				"field": "title as text,_id as value"
+			}
+		},
+		"user_id": {
+			"title": "评论人",
+			"bsonType": "string",
+			"description": "评论者ID，参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id",
+			"enum":{
+				"collection": "uni-id-users",
+				"field": "username as text,_id as value"
+			},
+			"forceDefaultValue": {
+				"$env": "uid"
+			}
+		},
+		"comment_content": {
+			"title":"评论内容",
+			"bsonType": "string",
+			"description": "评论内容",
+			"title": "评论内容",
+			"trim": "right"
+		},
+		// "like_count": {
+		// 	"bsonType": "int",
+		// 	"description": "评论喜欢数、点赞数"
+		// },
+		"comment_type": {
+			"title": "评论类型",
+			"bsonType": "int",
+			"description": "回复类型： 0 针对文章的回复  1 针对评论的回复",
+			"enum":[
+				{
+					"text":"文章的回复",
+					"value":0
+				},
+				{
+					"text":"评论的回复",
+					"value":1
+				}
+			]
+		},
+		"reply_user_id": {
+			"bsonType": "string",
+			"title": "被回复的评论用户",
+			"description": "被回复的评论用户ID，comment_type为1时有效",
+			"foreignKey": "uni-id-users._id",
+			"enum":{
+				"collection": "uni-id-users",
+				"field": "username as text,_id as value"
+			}
+		},
+		"reply_comment_id": {
+			"bsonType": "string",
+			"title": "被回复的评论",
+			"description": "被回复的评论ID，comment_type为1时有效",
+			"foreignKey": "opendb-news-comments._id",
+			"enum":{
+				"collection": "opendb-news-comments",
+				"field": "comment_content as text,_id as value"
+			}
+		},
+		"status":{
+			"bsonType": "bool",
+			"title": "状态值",
+			"defaultValue":true
+		},
+		"comment_date": {
+			"bsonType": "timestamp",
+			"description": "评论发表时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"comment_ip": {
+			"bsonType": "string",
+			"description": "评论发表时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		},
+		"city":{
+			"bsonType": "string",
+			"title": "评论者所在城市",
+			"description": "和comment_ip联动,通过高德地图api查询所得"
+		}
+	}
+}

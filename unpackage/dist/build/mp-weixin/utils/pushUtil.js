@@ -1,0 +1,1 @@
+"use strict";const e=require("../common/vendor.js");exports.pushUtil=function(){e.index.getPushClientId({success(e){console.log(e)}}),e.index.onPushMessage((s=>{switch(console.log(s),s.type){case"receive":e.index.createPushMessage({title:"你关注的up主更新了!",content:"大家好改电话费搞活动"});break;case"click":e.index.navigateTo({url:"/pages/topicList/topicList"})}}))};

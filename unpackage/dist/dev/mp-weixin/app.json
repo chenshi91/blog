@@ -1,0 +1,71 @@
+{
+  "pages": [
+    "pages/index/index",
+    "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+    "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+    "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+    "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+    "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+    "uni_modules/uni-id-pages/pages/login/login-withpwd",
+    "uni_modules/uni-id-pages/pages/login/login-smscode",
+    "uni_modules/uni-id-pages/pages/register/register",
+    "uni_modules/uni-id-pages/pages/register/register-by-email",
+    "uni_modules/uni-id-pages/pages/retrieve/retrieve",
+    "uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email",
+    "uni_modules/uni-id-pages/pages/common/webview/webview",
+    "uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd",
+    "uni_modules/uni-id-pages/pages/register/register-admin",
+    "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+    "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+    "pages/topicAdd/topicAdd",
+    "pages/topicList/topicList",
+    "pages/self/self",
+    "pages/edit/edit",
+    "pages/detail/detail",
+    "pages/blog-articles/add",
+    "pages/blog-articles/edit",
+    "pages/blog-articles/list",
+    "pages/blog-articles/detail",
+    "pages/blog-like/add",
+    "pages/blog-like/edit",
+    "pages/blog-like/list",
+    "pages/blog-like/detail",
+    "pages/demo/demo",
+    "pages/opendb-news-articles/add",
+    "pages/opendb-news-articles/edit",
+    "pages/opendb-news-articles/list",
+    "pages/opendb-news-articles/detail",
+    "pages/open-db-news-like/add",
+    "pages/open-db-news-like/edit",
+    "pages/open-db-news-like/list",
+    "pages/open-db-news-like/detail",
+    "uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback",
+    "pages/about/about"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#007aff",
+    "backgroundColor": "#4cd964"
+  },
+  "tabBar": {
+    "color": "#ccc",
+    "backgroundColor": "#007aff",
+    "selectedColor": "#2C405A",
+    "list": [
+      {
+        "text": "主页",
+        "pagePath": "pages/index/index",
+        "iconPath": "static/logo/home.png",
+        "selectedIconPath": "static/logo/home-active.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/self/self",
+        "iconPath": "static/logo/member.png",
+        "selectedIconPath": "static/logo/member-active.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

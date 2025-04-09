@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "demo测试页面",
+  "usingComponents": {
+    "u-skeleton": "../../uni_modules/uview-plus/components/u-skeleton/u-skeleton",
+    "uni-list-item": "../../uni_modules/uni-list/components/uni-list-item/uni-list-item",
+    "uni-list": "../../uni_modules/uni-list/components/uni-list/uni-list",
+    "unicloud-db": "../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db",
+    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button",
+    "u-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon"
+  }
+}

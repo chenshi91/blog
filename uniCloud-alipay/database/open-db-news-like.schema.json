@@ -1,0 +1,93 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": "doc.user_id == auth.uid",
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"article_id": {
+			"title": "文章",
+			"bsonType": "string",
+			"description": "文章id，参考opendb-news-articles表",
+			"foreignKey": "opendb-news-articles._id",
+			"enum":{
+				"collection": "opendb-news-articles",
+				"field": "title as text, _id as value"
+			}
+		},
+		"comments_id": {
+			"title": "评论",
+			"bsonType": "string",
+			"description": "文章id，参考opendb-news-articles表",
+			"foreignKey": "opendb-news-comments._id",
+			"enum":{
+				"collection": "opendb-news-comments",
+				"field": "comment_content as text, _id as value"
+			}
+		},
+		"like_type": {
+			"title": "点赞类型",
+			"bsonType": "int",
+			"description": "点赞类型： 0 针对文章的点赞  1 针对评论的点赞",
+			"enum":[
+				{
+					"text":"文章的点赞",
+					"value":0
+				},
+				{
+					"text":"评论的点赞",
+					"value":1
+				}
+			]
+		},
+		"status":{
+			"bsonType": "int",
+			"title": "点赞状态",
+			"description": "点赞状态:0 点赞  1无状态  2踩一下",
+			"enum":[
+				{
+					"text":"赞一下",
+					"value":0
+				},
+				{
+					"text":"不表态",
+					"value":1
+				},
+				{
+					"text":"踩一下",
+					"value":2
+				}
+			]
+		},
+		"user_id": {
+			"title": "用户",
+			"bsonType": "string",
+			"description": "用户id，参考uni-id-users表",
+			"foreignKey": "uni-id-users._id",
+			"enum":{
+				"collection": "uni-id-users",
+				"field": "username as text,_id as value"
+			}
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},"create_date": {
+			"bsonType": "timestamp",
+			"description": "修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

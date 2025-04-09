@@ -1,0 +1,1 @@
+"use strict";const e=require("../../libs/config/props.js"),r={props:{show:{type:Boolean,default:()=>e.defProps.overlay.show},zIndex:{type:[String,Number],default:()=>e.defProps.overlay.zIndex},duration:{type:[String,Number],default:()=>e.defProps.overlay.duration},opacity:{type:[String,Number],default:()=>e.defProps.overlay.opacity}}};exports.props=r;

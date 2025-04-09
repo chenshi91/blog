@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "cloud-avater": "../cloud-avater/cloud-avater",
+    "u-avatar": "../../uni_modules/uview-plus/components/u-avatar/u-avatar",
+    "uni-dateformat": "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
+    "cloud-image": "../../uni_modules/uni-id-pages/components/cloud-image/cloud-image",
+    "u-action-sheet": "../../uni_modules/uview-plus/components/u-action-sheet/u-action-sheet"
+  }
+}

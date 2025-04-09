@@ -1,0 +1,10 @@
+{
+  "name": "boke",
+  "dependencies": {
+    "boke": "file:../common/boke"
+  },
+  "extensions": {
+    "uni-cloud-jql": {},
+    "uni-cloud-push": {}
+  }
+}

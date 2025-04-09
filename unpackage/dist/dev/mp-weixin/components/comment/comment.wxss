@@ -1,0 +1,134 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* uni.scss */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.comment.data-v-dfd4a230 {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: wrap;
+  font-size: 14rpx;
+  font-weight: normal;
+}
+.comment .userInfo.data-v-dfd4a230 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.comment .userInfo .info.data-v-dfd4a230 {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.comment .userInfo .info view.data-v-dfd4a230 {
+  width: 250rpx;
+}
+.comment .userInfo .info .top.data-v-dfd4a230 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment .userInfo .info .top text.data-v-dfd4a230 {
+  font-size: 35rpx;
+  font-weight: bold;
+}
+.comment .userInfo .info .top .left.data-v-dfd4a230 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 280rpx;
+}
+.comment .userInfo .info .top .right.data-v-dfd4a230 {
+  width: 150rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment .userInfo .info .top .right text.data-v-dfd4a230 {
+  font-weight: normal;
+}
+.comment .userInfo .info .bottom.data-v-dfd4a230 {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.comment .userInfo .info .bottom view.data-v-dfd4a230 {
+  width: 150rpx;
+  margin-right: 25rpx;
+}
+.comment .userInfo .info .bottom text.data-v-dfd4a230 {
+  white-space: nowrap;
+  font-size: 20rpx;
+  color: rgba(0, 0, 0, 0.5);
+  /* 将颜色设置为黑色，透明度为50% */
+}
+.comment .content.data-v-dfd4a230 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.comment .content text.data-v-dfd4a230 {
+  margin-left: 100rpx;
+  font-size: 50rpx;
+  font-weight: normal;
+}
+.comment .time.data-v-dfd4a230 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 30rpx;
+}
+.comment .time .left.data-v-dfd4a230 {
+  width: 70%;
+  margin-left: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.comment .time .left text.data-v-dfd4a230 {
+  white-space: nowrap;
+  font-size: 30rpx;
+  color: rgba(0, 0, 0, 0.5);
+  /* 将颜色设置为黑色，透明度为50% */
+}
+.comment .time .left text.data-v-dfd4a230:nth-of-type(3) {
+  color: blue;
+}
+.comment .time .left text.data-v-dfd4a230:nth-of-type(3):hover {
+  text-decoration: underline;
+}
+.comment .end.data-v-dfd4a230 {
+  width: 97%;
+  margin-left: 100rpx;
+  border-bottom: 1rpx solid darkgray;
+}

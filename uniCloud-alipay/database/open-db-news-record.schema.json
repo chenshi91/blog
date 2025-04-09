@@ -1,0 +1,59 @@
+{
+	"bsonType": "object",
+	"required": [
+		"article_id"
+		// "publish_ip"
+	],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"article_id": {
+			"title": "访问的文章",
+			"bsonType": "string",
+			"foreignKey": "opendb-news-articles._id",
+			"enum":{
+				"collection": "opendb-news-articles",
+				"field": "title as text,_id as value"
+			}
+		},
+		"user_id": {
+			"bsonType": "string",
+			"title": "访客",
+			"description": "文章作者ID， 参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id",
+			"enum":{
+				"collection": "uni-id-users",
+				"field": "username as text,_id as value"
+			}
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"title": "访问时间",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"publish_ip": {
+			"bsonType": "string",
+			"title": "访客的IP地址",
+			"description": "发表时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		},
+		"city":{
+			"bsonType": "string",
+			"title": "访客所在城市",
+			"description": "当前访客的省份信息,通过查询高德地图API获取"
+		}
+	},
+	"version": "0.0.1"
+}

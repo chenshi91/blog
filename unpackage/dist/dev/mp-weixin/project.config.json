@@ -1,0 +1,32 @@
+{
+    "description": "项目配置文件。",
+    "packOptions": {
+        "ignore": [],
+        "include": []
+    },
+    "setting": {
+        "urlCheck": false,
+        "es6": true,
+        "postcss": true,
+        "minified": true,
+        "newFeature": true,
+        "bigPackageSizeSupport": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "condition": true,
+        "compileWorklet": true,
+        "uglifyFileName": false
+    },
+    "compileType": "miniprogram",
+    "libVersion": "2.0.0",
+    "appid": "wx69346d5bc871bbb9",
+    "projectname": "boke-xxm",
+    "condition": {},
+    "editorSetting": {
+        "tabIndent": "insertSpaces",
+        "tabSize": 4
+    }
+}

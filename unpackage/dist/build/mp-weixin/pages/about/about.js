@@ -1,0 +1,1 @@
+"use strict";const e=require("../../common/vendor.js"),a={__name:"about",setup(a){let r=e.ref(10),t=e.ref("这是一个属于陈实的个人网站,数据用来做学习测试所用,不包含任何商业用途");return(a,n)=>e.e({a:e.t(e.unref(t)),b:a.uniIDHasRole("admin")},a.uniIDHasRole("admin")?{c:e.t(e.unref(r))}:{})}},r=e._export_sfc(a,[["__scopeId","data-v-b361c0a9"]]);wx.createPage(r);

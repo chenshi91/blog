@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "cloud-avater": "../cloud-avater/cloud-avater",
+    "uni-dateformat": "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat"
+  }
+}

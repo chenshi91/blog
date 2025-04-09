@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "首页-博客列表",
+  "usingComponents": {
+    "u-skeleton": "../../uni_modules/uview-plus/components/u-skeleton/u-skeleton",
+    "u-tabs": "../../uni_modules/uview-plus/components/u-tabs/u-tabs",
+    "unicloud-db": "../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db",
+    "blog": "../../components/blog/blog"
+  }
+}

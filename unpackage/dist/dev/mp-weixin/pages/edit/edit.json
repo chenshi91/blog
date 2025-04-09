@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "编辑",
+  "usingComponents": {
+    "u-input": "../../uni_modules/uview-plus/components/u-input/u-input",
+    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
+  }
+}

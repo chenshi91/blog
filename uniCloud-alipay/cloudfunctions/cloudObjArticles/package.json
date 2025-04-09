@@ -1,0 +1,7 @@
+{
+  "name": "cloudObjArticles",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

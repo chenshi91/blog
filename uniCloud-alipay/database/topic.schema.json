@@ -1,0 +1,42 @@
+{
+	"bsonType": "object",
+	"required": ["title"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title":{
+			"bsonType": "string",
+			"description": "标题",
+			"errorMessage":"标题不能为空!",
+			"trim": "both"
+			// "pattern":"^.+$"
+			
+		},
+		"content":{
+			"bsonType": "string",
+			"description": "内容"
+		},
+		"createTime":{
+			"bsonType": "timestamp",
+			"description": "创建日期",
+			"defaultValue":{
+				"$env": "now"
+			}
+		},
+		"userId":{
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id",
+			"description": "关联userId",
+			"defaultValue":{
+				"$env": "uid"
+			}
+		}
+	}
+}

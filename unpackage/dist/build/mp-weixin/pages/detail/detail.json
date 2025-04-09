@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "详情页",
+  "onReachBottomDistance": 0,
+  "usingComponents": {
+    "u-skeleton": "../../uni_modules/uview-plus/components/u-skeleton/u-skeleton",
+    "cloud-avater": "../../components/cloud-avater/cloud-avater",
+    "uni-dateformat": "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
+    "u-parse": "../../uni_modules/uview-plus/components/u-parse/u-parse",
+    "u-empty": "../../uni_modules/uview-plus/components/u-empty/u-empty",
+    "comment": "../../components/comment/comment",
+    "u-search": "../../uni_modules/uview-plus/components/u-search/u-search",
+    "unicloud-db": "../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db",
+    "u-popup": "../../uni_modules/uview-plus/components/u-popup/u-popup",
+    "u-back-top": "../../uni_modules/uview-plus/components/u-back-top/u-back-top"
+  }
+}

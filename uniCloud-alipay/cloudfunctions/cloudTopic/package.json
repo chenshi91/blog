@@ -1,0 +1,7 @@
+{
+  "name": "cloudTopic",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

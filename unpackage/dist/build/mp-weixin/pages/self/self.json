@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的",
+  "usingComponents": {
+    "u-notice-bar": "../../uni_modules/uview-plus/components/u-notice-bar/u-notice-bar",
+    "cloud-avater": "../../components/cloud-avater/cloud-avater",
+    "uni-dateformat": "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat"
+  }
+}

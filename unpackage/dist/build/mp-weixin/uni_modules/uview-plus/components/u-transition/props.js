@@ -1,0 +1,1 @@
+"use strict";const t=require("../../libs/config/props.js"),o={props:{show:{type:Boolean,default:()=>t.defProps.transition.show},mode:{type:String,default:()=>t.defProps.transition.mode},duration:{type:[String,Number],default:()=>t.defProps.transition.duration},timingFunction:{type:String,default:()=>t.defProps.transition.timingFunction}}};exports.props=o;

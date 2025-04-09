@@ -1,0 +1,21 @@
+{
+  "hash": "6a58e7c0",
+  "configHash": "a23abffb",
+  "lockfileHash": "e1ed2cf3",
+  "browserHash": "ed9f1091",
+  "optimized": {
+    "uuid": {
+      "src": "../../../../../node_modules/uuid/dist/esm-browser/index.js",
+      "file": "uuid.js",
+      "fileHash": "164b18ff",
+      "needsInterop": false
+    },
+    "mitt": {
+      "src": "../../../../../node_modules/mitt/dist/mitt.mjs",
+      "file": "mitt.js",
+      "fileHash": "8f042d04",
+      "needsInterop": false
+    }
+  },
+  "chunks": {}
+}

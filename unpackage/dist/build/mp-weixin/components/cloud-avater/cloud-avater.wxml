@@ -1,0 +1,1 @@
+<view bindtap="{{e}}" style="{{'width:' + f + ';' + ('height:' + g) + ';' + 'justify-content:center'}}"><u-avatar wx:if="{{a}}" style="{{'width:' + b + ';' + ('height:' + c)}}" u-i="4f962484-0" bind:__l="__l" u-p="{{d}}"></u-avatar></view>

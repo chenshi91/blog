@@ -1,0 +1,1 @@
+<view class="content data-v-13a78ac6">{{a}} <text wx:if="{{b}}" class="data-v-13a78ac6">管理员才能看到{{c}}</text></view>
