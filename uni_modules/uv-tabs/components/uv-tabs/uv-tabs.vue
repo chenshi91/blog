@@ -353,7 +353,7 @@
 				position: relative;
 
 				&__item {
-					padding: 0 11rpx;
+					padding: 0 11px;
 					@include flex;
 					align-items: center;
 					justify-content: center;
@@ -365,7 +365,7 @@
 					}
 
 					&__text {
-						font-size: 14rpx;
+						font-size: 15px;
 						color: $uv-content-color;
 
 						&--disabled {
@@ -375,12 +375,12 @@
 				}
 
 				&__line {
-					height: 3rpx;
+					height: 3px;
 					background: $uv-primary;
-					width: 24rpx;
+					width: 30px;
 					position: absolute;
-					bottom: 2rpx;
-					border-radius: 100rpx;
+					bottom: 2px;
+					border-radius: 100px;
 					transition-property: transform;
 					transition-duration: 300ms;
 				}

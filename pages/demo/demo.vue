@@ -17,8 +17,8 @@
 <script setup>
 import CComment from "@/components/cc-comment/cc-comment.vue";
 import { ref } from "vue";
-import useHooks from "@/hooks"
-const {likeAndPushMsg,replyAndPushMsg} =useHooks()
+// import useHooks from "@/hooks"
+// const {likeAndPushMsg,replyAndPushMsg} =useHooks()
 console.log("@@@@likeAndPushMsg",likeAndPushMsg());
 console.log("$$$replyAndPushMsg",replyAndPushMsg());
 

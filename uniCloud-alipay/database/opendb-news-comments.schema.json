@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["article_id", "user_id", "comment_content",  "comment_type"],
+	"required": ["article_id",  "user_content"],
 	"permission": {
 		"read": true,
 		// "create": "auth.uid != null && get(`database.opendb-news-articles.${doc.article_id}`).comment_status == 1",
@@ -35,45 +35,32 @@
 				"$env": "uid"
 			}
 		},
-		"comment_content": {
+		"user_content": {
 			"title":"评论内容",
 			"bsonType": "string",
 			"description": "评论内容",
 			"title": "评论内容",
 			"trim": "right"
 		},
-		// "like_count": {
-		// 	"bsonType": "int",
-		// 	"description": "评论喜欢数、点赞数"
-		// },
-		"comment_type": {
-			"title": "评论类型",
-			"bsonType": "int",
-			"description": "回复类型： 0 针对文章的回复  1 针对评论的回复",
-			"enum":[
-				{
-					"text":"文章的回复",
-					"value":0
-				},
-				{
-					"text":"评论的回复",
-					"value":1
-				}
-			]
-		},
-		"reply_user_id": {
+	
+		"reply_id": {
 			"bsonType": "string",
-			"title": "被回复的评论用户",
-			"description": "被回复的评论用户ID，comment_type为1时有效",
-			"foreignKey": "uni-id-users._id",
+			"title": "被回复的评论id",
+			"description": "被回复的评论id，二级回复",
+			"foreignKey": "opendb-news-comments._id",
 			"enum":{
-				"collection": "uni-id-users",
-				"field": "username as text,_id as value"
+				"collection": "opendb-news-comments",
+				"field": "comment_content as text,_id as value"
 			}
 		},
-		"reply_comment_id": {
+      "reply_name": {
 			"bsonType": "string",
-			"title": "被回复的评论",
+			"title": "被回复人名称",
+			"description": "被回复人名称"
+		},
+		"parent_id": {
+			"bsonType": "string",
+			"title": "首级评论id",
 			"description": "被回复的评论ID，comment_type为1时有效",
 			"foreignKey": "opendb-news-comments._id",
 			"enum":{
@@ -86,14 +73,14 @@
 			"title": "状态值",
 			"defaultValue":true
 		},
-		"comment_date": {
+		"create_time": {
 			"bsonType": "timestamp",
 			"description": "评论发表时间",
 			"forceDefaultValue": {
 				"$env": "now"
 			}
 		},
-		"comment_ip": {
+		"create_ip": {
 			"bsonType": "string",
 			"description": "评论发表时 IP 地址",
 			"forceDefaultValue": {

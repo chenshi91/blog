@@ -5,3 +5,15 @@ export function f1(){
 // const require=createRequire(import.meta.url)
 
 // export const demo=require("demo.js")
+
+
+export function getImgsFromString(str){
+	var data = [];
+	str.replace(/<img [^>]*src=['"]([^"]+)[^>]*>/g, 
+		function (match, capture) {
+			data.push(capture);
+		}
+	);
+	// console.log(data)
+	return data
+}

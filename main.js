@@ -1,6 +1,7 @@
 import App from './App'
 import uviewPlus from '@/uni_modules/uview-plus'
 import {createPinia} from "pinia"
+import msgShowVue from "./components/msg-show.vue"
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -22,6 +23,7 @@ export function createApp() {
   
   app.use(uviewPlus)
   app.use(createPinia())
+  app.component("msgShow",msgShowVue)
   
   return {
     app

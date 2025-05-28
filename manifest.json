@@ -18,7 +18,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Push" : {}
+            "Push" : {},
+            "OAuth" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -55,7 +56,8 @@
                         "version" : "2",
                         "offline" : false
                     }
-                }
+                },
+                "oauth" : {}
             },
             "icons" : {
                 "android" : {
@@ -142,7 +144,7 @@
             "enable" : true
         },
         "router" : {
-            "base" : "/v3",
+            "base" : "/v10",
             "mode" : "hash"
         },
         "uniStatistics" : {

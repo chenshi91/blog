@@ -1,361 +1,278 @@
 <template>
-	<view class="detail">
-		
-		<unicloud-db v-slot:default="{data, loading, error, options}"  ref="udbBlog"
-		:collection="collectionDB" loadtime="manual"   getone   @load="loadDB" @error="errorDB">
-			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="loading">
-				<!-- 正在加载数据... -->
-				<u-skeleton rows="10" avatar ></u-skeleton>
+	<view>
+		<!-- #ifdef H5 -->
+			<msgShow></msgShow>
+		<!-- #endif -->
+		<uni-nav-bar fixed :border="false" leftIcon="left" @clickLeft="clickLeft">
+			<view
+				style="font-size: 55rpx;font-weight: 800;width: 100%;display: flex;align-items: center;justify-content: center;">
+				<text v-if="title.length<6">{{title}}</text>
+				<text v-else>{{title?.substring(0,6)+'...'}}</text>
 			</view>
-			<view v-else>
-				<uni-nav-bar fixed :border="false"   leftIcon="left" @clickLeft="clickLeft">
-					<view style="font-size: 55rpx;font-weight: 800;width: 100%;display: flex;align-items: center;justify-content: center;">
-						<text v-if="data?.title.length<6">{{data?.title}}</text>
-						<text v-else>{{data?.title?.substring(0,6)+'...'}}</text>
-					</view>
-				</uni-nav-bar>
-				<uni-card isFull>
-					<template v-slot:title>
-						<uni-list>
-							<uni-list-chat :avatar="data?.user_id[0].avatar_file?.url" :title="data?.user_id[0].username ?? '匿名'"  note="发布于湖南省" avatar-circle >
-								<view>
-									<uni-dateformat :date="data?.publish_date" format="yyyy-MM-dd hh:mm:ss"></uni-dateformat>
-								</view>
-							</uni-list-chat>
-						</uni-list>
-					</template>
-					<view class="testView">
-						<!-- <text>sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个
-						sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个</text> -->
-						<uv-parse :content="data?.content"></uv-parse>
-					</view>
-					<template v-slot:actions>
-						<view class="other" :class="data2?.hasLike?'active':''"  @click="clickLike(data._id._value)">
-							<text class="iconfont icon-dianzan"></text>
-							<text >{{data2?.likeAvatarGroup.length}}</text>
+		</uni-nav-bar>
+		<uni-card isFull>
+			<template v-slot:title>
+				<uni-list>
+					<uni-list-chat :avatar="userAvater" :title="username ?? '匿名'" note="发布于湖南省" avatar-circle>
+						<view>
+							<text>发布时间:</text>
+							<uni-dateformat :date="publish_date" format="yyyy-MM-dd hh:MM:ss"></uni-dateformat>
 						</view>
-						<view class="avaterGroup">
-							<unicloud-db collection="uni-id-users" v-slot:default="{loading, data, error, options}" ref="userRef"
-							 :where="data2.where_user" field="_id,username,nickname,avatar_file" @load="loadDB_user">
-								<uv-avatar-group :urls="data2?.likeAvatarGroup" size="35" gap="0.4"></uv-avatar-group>
-							</unicloud-db>
-							
-						</view>
-						<BlogComments :article_id="data?._id?._value" name="chenshiW" :autherInfo="data?.user_id[0]" ref="commentRef"></BlogComments>
-					</template>
-				</uni-card>
-				
-			
-				
+					</uni-list-chat>
+				</uni-list>
+			</template>
+			<view class="testView">
+				<!-- <text>sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个
+				sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个sdghsgd和建设工地施工的计划十多个</text> -->
+				<uv-parse :content="content"></uv-parse>
 			</view>
-		</unicloud-db>
-		
-		<unicloud-db collection="open-db-news-like" ref="likeDB"></unicloud-db>
-
+			<template v-slot:actions>
+				<view class="other" :class="hasLike?'active':''" @click="clickLike(_id)">
+					<!-- <text class="iconfont icon-dianzan"></text> -->
+					<uni-icons type="hand-up" size="50"></uni-icons>
+					<text>{{likedUserAvaters.length}}</text>
+				</view>
+				<view class="avaterGroup">
+					<uv-avatar-group :urls="likedUserAvaters" size="35" gap="0.4"></uv-avatar-group>
+				</view>
+				<!-- <BlogComments :article_id="data?._id?._value" name="chenshiW" :autherInfo="data?.user_id[0]" ref="commentRef"></BlogComments> -->
+			</template>
+		</uni-card>
+		<CComment ref="ccRef" v-model:myInfo="myInfo" v-model:userInfo="userInfo" v-model:tableData="tableData"
+			v-model:tableTotal="tableTotal" :deleteMode="deleteMode" @likeFun="likeFun" @replyFun="replyFun"
+			@deleteFun="deleteFun"></CComment>
+			<uv-load-more class="loadMore" :status="load_more_status"  loadmoreText="触底加载更多评论..."/>
+			<view class="btn" @tap="openComment">发表新评论</view>
 	</view>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref,nextTick,computed,onMounted ,provide,watchEffect, getCurrentInstance, Ref, toRefs} from 'vue';
-import {onLoad,onReady,onShow,onReachBottom,onPageScroll} from '@dcloudio/uni-app'
-import pageJson from '@/pages.json'
-import { store,mutations} from '../../uni_modules/uni-id-pages/common/store.js'
-import {getCityByIP,getCity} from '@/utils/tools.js'
-import {useLikeAbout} from '@/hooks/likeAbout.ts'
-import useUtils from '@/hooks/useUtils.ts';
-import { number, string } from '../../uni_modules/uview-plus/libs/function/test.js';
-import BlogComments from './components/BlogComments.vue';
-import type {TLike,Tuser,TResponseResult} from '@/type/TableFields.d.ts'
-import {usePushMsg} from '@/hooks/usePushMsg'
-const {xu,getName,addLike} =useLikeAbout()
-const {getUserAvaterWithJpg}=useUtils()
-const {sendMsgByUserId} =usePushMsg()
+import { onMounted, getCurrentInstance, onUnmounted, ref, reactive, toRefs, computed } from "vue"
+import { onLoad,onReachBottom } from "@dcloudio/uni-app"
+import CComment from "@/components/cc-comment/cc-comment.vue"
+import { reqBlogContent } from "@/api/reqBlogInfo"
+import { reqUserAvaters } from "@/api/reqUserAvater"
+import usePageBlogDetail from "@/hooks/usePageBlogDetail"
+import { sendMsg } from "../../api/sendMsg"
 
-// console.log("setup,getCurrentInstance=",getCurrentInstance());
-const data2=reactive({
-	// id:'',
-	// collection:[
-	// 	db.collection("opendb-news-articles").field("_id,title,user_id,content,article_status").getTemp(),
-	// 	// db.collection("open-db-news-like").field("_id,status,article_id,user_id").getTemp(),
-	// 	// db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-	// ],
-	// avatarGroup:['https://cdn.uviewui.com/uview/album/1.jpg',
-	// 	'https://cdn.uviewui.com/uview/album/2.jpg'],
-	pageNo:1,
-	pageSize:5,
-	targetUserId:"",
-	title:"",
-	statu_like:true,
-	where_user:{},
-	hasLike:false,
-	like_user_ids:[] as string[],
-	likeAvatarGroup:[] as string[],
-	open_db_news_like:[] as TLike[],
 	
 	
-})
+	const _id=ref<string>("")
+	const title=ref<string>("")
+	const username=ref<string>("")
+	const userAvater=ref<string>("")
+	const publish_date=ref<string>("")
+	const content=ref<string>("")
+	let likedUserAvaters=reactive<string[]>([])
+	const like_status=ref<number>(0)
+	const authUserId=ref<string>("")
+	
+	const {ccRef,deleteMode,deleteFun,replyFun,likeFun,openComment,myInfo,userInfo,tableData,tableTotal,load_more_status,loadBlogComments} =usePageBlogDetail()
 
+	const hasLike = computed<boolean>({
+		get: () => {
+			return like_status.value == 0 ? true : false
+		},
+		set: () => {
 
-const udbBlog=ref(null)
-const id=ref<string>()
-const db=uniCloud.database()
-const dbCmd=db.command
-const collectionDB=reactive([])
-const likeDB=ref(null)
-const loadDB=(res,noMore)=>{
-	const {_id}=res
-	console.log("loadDB:",res,noMore);
-	data2.open_db_news_like=res?._id["open-db-news-like"]
-	data2.like_user_ids=data2.open_db_news_like.map(item=>{
-		return item.user_id
-	})
-	data2.hasLike=data2.like_user_ids.includes(userInfo.value?._id)
-	// console.log(data2.like_user_ids);
-	data2.where_user={
-		_id:dbCmd.in(data2.like_user_ids)
-	}
-	data2.targetUserId=res?.user_id[0]?._id
-	data2.title=res?.title
-}
-const loadDB_user=(res,noMore)=>{
-	// console.log("userDB load:",res,noMore);
-	data2.likeAvatarGroup=res.map(item=>{
-		if(item?.avatar_file?.url){
-			return "https://env-00jxgsabub39.normal.cloudstatic.cn/"+item?.avatar_file?.url.split("cloud://env-00jxgsabub39")[1]
-		}else{//默认头像
-			return 'https://cdn.uviewui.com/uview/album/1.jpg'
 		}
 	})
-	// console.log("头像组:",data2.likeAvatarGroup);
-}
-const errorDB=(p1,p2)=>{
-	console.log("5555555555,",p1,p2);
-}
+	// console.log("hasLike=", hasLike);
 
 	
-	const clickLeft=()=>{
-		uni.navigateBack()
-	}
-	
-// const {_id,nickname,avatar_file:{url}}=store?.userInfo
-	
-const clickLike=(id_blog:string)=>{
-	// console.log("点赞：",id_blog,data2.hasLike);
-	data2.hasLike=!data2.hasLike
-	// console.error("cuowu err");
-	addLike("blog",id_blog,data2.hasLike?0:1).then(res =>{
-		// console.log("addLike ok,res=",res);
-		//头像组的联动+消息推送
-		const userAvater=getUserAvaterWithJpg(userInfo.value?.avatar_file?.url)
-		if(res?.id){
-			//新增
-			// console.log("新增点赞ok，图像组联动...");
-			data2.likeAvatarGroup.unshift(userAvater)
-			//消息
-			const msg=nickname+"给你的文章<<"+data2.title+">>点赞了!"
-			sendMsgByUserId(_id,nickname,getUserAvaterWithJpg(url),msg,data2.targetUserId).then(res=>{
-				console.log("消息发送ok:",res);
-			}).catch(err=>{
-				console.log("消息发送失败:",err);
-			})
-		}else if(res?.updated==1&&data2.hasLike){
-			//点赞
-			// console.log("重新点赞ok，图像组联动...");
-			data2.likeAvatarGroup.unshift(userAvater)
-			//消息
-			const msg=nickname+"给你的文章<<"+data2.title+">>重新点赞了!"
-			sendMsgByUserId(_id,nickname,getUserAvaterWithJpg(url),msg,data2.targetUserId).then(res=>{
-				console.log("消息发送ok:",res);
-			}).catch(err=>{
-				console.log("消息发送失败:",err);
-			})
-		}else if(res?.updated==1&&!data2.hasLike){
-			//取消点赞
-			console.log("取消点赞ok，图像组联动...");
-			data2.likeAvatarGroup=data2.likeAvatarGroup.filter(item=>{
-				return item!=userAvater
-			})
-			//消息
-			const msg=nickname+"给你的文章<<"+data2.title+">>取消点赞了!"
-			sendMsgByUserId(_id,nickname,getUserAvaterWithJpg(url),msg,data2.targetUserId).then(res=>{
-				console.log("消息发送ok:",res);
-			}).catch(err=>{
-				console.log("消息发送失败:",err);
-			})
-		}
-	}).catch(err=>{
-		console.log("addLike err:",err);
-	})
-	
-	
-	
-}
+	onMounted(() => {
 
-	
-	const userInfo=computed(()=>{return store.userInfo})
-	const hasLogin=computed(()=>{return store.hasLogin})
-	
-	
-	
-	
-	onPageScroll((e)=>{
-		// scrollTop.value=e.scrollTop
-		// console.log(e.scrollTop);
-	})
-	onLoad((ops)=>{
-		
-		console.log("detail-onload.id=",ops);
-		if(!ops||!ops.id){
-			console.log("id为空跳转到首页");
-			uni.navigateTo({
-				url:"/pages/index/index"
-			}).then(res=>{
-				console.log(res);
-			}).catch(err=>{
-				console.log(err.message);
-			})
-			return
-		}
-		// data.id=ops.id
-		// Reflect.set(data2.where,"_id",ops.id)
-		//id到位开始加载数据
-		id.value=ops.id
-		
-		collectionDB.push(db.collection("opendb-news-articles").where(`_id=='${id.value}'`).field("_id,title,user_id,content,article_status,publish_date").getTemp())
-		collectionDB.push(db.collection('open-db-news-like').where("status!=1").field('_id,user_id,article_id,status').getTemp())
-		collectionDB.push(db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp())
-		nextTick(()=>{
-			// getCurrentInstance().proxy.$refs.udbBlog.loadData()
-			udbBlog.value.loadData()
-		})
-		// data2.where={_id:ops.id}
-		//viewCount++
-		db.collection("open-db-news-record").add({
-			article_id:id.value,
-			user_id:userInfo.value?._id
-		}).then(({result:{id}})=>{
-			console.log("add record ok:",id);
-			if(id){
-				db.collection("open-db-news-record").doc(id).get({getOne:true}).then(({result:{data}})=>{
-					console.log("res=",data);
-					if(data){
-						const {publish_ip}=data
-						getCityByIP(publish_ip).then(city=>{
-							console.log("拿到了city=",city);
-							db.collection("open-db-news-record").doc(id).update({
-								city
-							}).then(({result})=>{
-								console.log("修改city 成功!",result);
-							}).catch(err=>{
-								console.error("修改城市失败了:",err);
-							})
-						})
-					}
-				})
+		const instance = getCurrentInstance().proxy
+		const eventChannel = instance.getOpenerEventChannel();
+		eventChannel.on("selectBlogById", (params) => {
+			// console.log("blogDetail eventChannel 收到了 emit:selectBlogById2", params);
+			_id.value=params._id
+			title.value=params.title
+			username.value=params.username
+			userAvater.value=params.userAvater
+			publish_date.value=params.publish_date
+			like_status.value=params.like_status
+			authUserId.value=params?.user_id
+			
+			reqUserAvaters(params.like_user_ids).then(res => {
+				Object.assign(likedUserAvaters,res)
+				// console.log("user", userAvaters.value);
+			}).catch((err) => console.error("getUserAvaters err:", err))
+			// console.log("现在的id:",_id.value);
+			if(_id.value==""||_id.value==null){
+				return
 			}
+			reqBlogContent(_id.value).then(res => {
+				// console.log("content=",res);
+				content.value = res
+			}).catch((err) => console.error("getBlogContent err:", err))
+			loadBlogComments(_id.value)
+			userInfo.user_avatar = userAvater.value
+			userInfo.user_name = username.value
+			userInfo.user_id = params?.user_id
+			console.log("userInfo:",userInfo);
 		})
-		
+
+
 	})
+
+	function clickLeft() {
+		uni.reLaunch({
+			url:"/pages/index/index"
+		})
+	}
+	function clickLike(_id : string) {
+		console.log("like add...");
+	}
+	function getLikeAbout(_id : string) {
+
+	}
 	
 	onReachBottom(()=>{
-		console.log("我触底了...");	
+		console.log("触底加载更多评论...");
+		
+		loadBlogComments(_id.value)
+	})
+	uni.$on("addComment",(params)=>{
+		console.log("开始发送消息...",params);
+		sendMsg({
+			targetUserId:authUserId.value,
+			userAvater:params?.user_avatar,
+			userName:params?.user_name,
+			title:"你有新的评论",
+			msg:`评论了你的文章【${title.value}】`
+		}).then(res=>{
+			console.log("res=",res);
+		})
+	})
+	uni.$on("updateLike",user_id=>{
+		sendMsg({
+			targetUserId:user_id,
+			title:"你有新的点赞",
+			msg:`${myInfo.user_name}点赞了你的评论`,
+			userAvater:myInfo.user_avatar,
+			userName:myInfo.user_name,
+		}).then(res=>{
+			console.log("点赞msg=",res);
+		})
+	})
+	onUnmounted(()=>{
+		//销毁事件
+		uni.$off(["addComment","deleteComment","updateLike"])
 	})
 	
-	onMounted(()=>{
-		console.log("moutend..:",id.value);
-		// console.log("kankna :",udbBlog.value);
-		// udbBlog.value.loadData()
-		// console.log(getCurrentInstance());
-	})
-	onReady(()=>{
-		
-	})
 	
 </script>
 
 <style lang="scss" scoped>
-	.detail{
+	.active {
+		background-color: springgreen;
+	}
+	.btn {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 95%;
+	  text-align: center;
+	  color: #fff;
+	  padding: 20rpx;
+	  // margin: 50rpx;
+	  border-radius: 30rpx;
+	  background-color: #2979ff;
+	}
+
+	.detail {
+
 		// padding: 10rpx;
-		.title{
+		.title {
 			font-size: 50rpx;
 			font-weight: bold;
 		}
-		.userInfo{
+
+		.userInfo {
 			display: flex;
 			justify-content: start;
 			align-items: center;
 			margin-bottom: 20rpx;
-			.left{
+
+			.left {
 				width: 100rpx;
 				height: 100rpx;
-				image{
+
+				image {
 					width: 100%;
 					height: 100%;
 				}
 			}
-			.right{
+
+			.right {
 				margin-left: 20rpx;
-				
-				text:first-of-type{
+
+				text:first-of-type {
 					// color: red;
 					padding-right: 20rpx;
 				}
 			}
 		}
-		.richContent{
+
+		.richContent {
 			margin-left: 120rpx;
 		}
-		.other{
-			width: 300rpx;
-			height: 120rpx;
-			background-color: #ccc;
-			border-radius: 60rpx;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			margin: 20rpx auto;
-			text{
-				font-size: 60rpx;
-				color: white;
-			}
-		}
-		.active{
-			background-color: springgreen;
-		}
-		.other2{
+
+
+
+		.other2 {
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
 			align-items: center;
-			image{
+
+			image {
 				width: 50rpx;
 				height: 50rpx;
 				border-radius: 50%;
 			}
 		}
-		.addComment{
+
+		.addComment {
 			margin-top: 100rpx;
 		}
-		.end{
+
+		.end {
 			width: 100%;
 			height: 300rpx;
 			// background-color: orange;
 		}
-		
+
 	}
-	
-	.testView{
+
+	.testView {
 		// border: 1rpx solid pink;
 		font-size: 44rpx;
 		color: black;
 	}
-	.avaterGroup{
+
+	.avaterGroup {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	
-	
+
+	.other {
+		width: 300rpx;
+		height: 120rpx;
+		background-color: #ccc;
+		border-radius: 60rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 20rpx auto;
+		border: 5rpx solid deeppink;
+
+		text {
+			font-size: 30rpx;
+			color: white;
+		}
+	}
 </style>

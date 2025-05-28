@@ -1,7 +1,9 @@
 <template>
 	<view class="self">
 		<!-- <up-icon name="photo"></up-icon> -->
-		<u-notice-bar mode="horizontal"  :text="text"></u-notice-bar>
+		<!-- #ifdef H5 -->
+			<msgShow></msgShow>
+		<!-- #endif -->
 		<view class="head" @click="toUserInfo($event)">
 			<view class="left">
 				<cloud-avater :src="userInfo?.avatar_file?.url??'../../static/logo.png'" mode="aspectFill"></cloud-avater>  
@@ -201,6 +203,7 @@ let text=ref("我的个人信息")
 			}).catch(err=>{
 				console.log(err.message);
 			})
+			
 		})
 	}
 </script>

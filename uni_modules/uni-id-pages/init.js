@@ -70,6 +70,7 @@ export default async function () {
   // 解绑clientDB错误事件
   // db.off('error', onDBError)
 
+	console.log("uni-id init...");
   // 4. 同步客户端push_clientid至device表
   if (uniCloud.onRefreshToken) {
     uniCloud.onRefreshToken(() => {

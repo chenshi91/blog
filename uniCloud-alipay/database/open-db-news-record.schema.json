@@ -31,6 +31,9 @@
 			"enum":{
 				"collection": "uni-id-users",
 				"field": "username as text,_id as value"
+			},
+        "defaultValue": {
+				"$env": "uid"
 			}
 		},
 		"create_date": {
@@ -52,7 +55,8 @@
 		"city":{
 			"bsonType": "string",
 			"title": "访客所在城市",
-			"description": "当前访客的省份信息,通过查询高德地图API获取"
+			"description": "当前访客的省份信息,通过查询高德地图API获取",
+        "defaultValue":"金星"
 		}
 	},
 	"version": "0.0.1"
