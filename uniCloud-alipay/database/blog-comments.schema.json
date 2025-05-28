@@ -1,0 +1,105 @@
+{
+	"bsonType": "object",
+	"required": [
+		"article_id",
+		"user_id",
+		"user_content"
+		
+	],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（文章 ID），系统自动生成"
+		},
+		"article_id": {
+			"title": "被评论的文章标题:",
+			"bsonType": "string",
+			"description": "文章ID，opendb-news-posts 表中的`_id`字段",
+			"foreignKey": "opendb-news-articles._id",
+			"enum":{
+				"collection": "opendb-news-articles",
+				"field": "title as text,_id as value"
+			}
+		},
+		"user_id": {
+			"title": "评论人:",
+			"bsonType": "string",
+			"description": "评论者ID，参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id",
+			"enum":{
+				"collection": "uni-id-users",
+				"field": "username as text,_id as value"
+			}
+		},
+		"user_name": {
+			"title": "评论人姓名:",
+			"bsonType": "string",
+			"description": "评论者name，参考`uni-id-users` 表"
+		},
+		"user_avatar": {
+			"title": "评论人头像:",
+			"bsonType": "string",
+			"description": "评论者头像，参考`uni-id-users` 表"
+		},
+		"user_content": {
+			"title":"评论内容:",
+			"bsonType": "string",
+			"description": "评论内容",
+			"trim": "right"
+		},
+		"like_count": {
+			"bsonType": "int",
+			"description": "评论喜欢数、点赞数",
+			"title": "评论点赞数:",
+			"defaultValue":0
+		},
+		"parent_id": {
+			  "title": "父级评论:",
+			  "bsonType": "string",
+			  "description": "父id",
+			  "parentKey": "_id", // 指定父子关系为：如果数据库记录A的_id和数据库记录B的parent_id相等，则A是B的父级。
+				"enum":{
+					"collection": "blog-comments",
+					"field": "user_content as text,_id as value"
+				}
+		},
+		
+		"reply_id": {
+			"title": "被回复的评论id:",
+			"bsonType": "string",
+			"description": "被回复的评论ID"
+			//"parentKey": "_id" // 指定父子关系为：如果数据库记录A的_id和数据库记录B的parent_id相等，则A是B的父级。
+		},
+		"reply_name": {
+			"title": "被回复的评论人:",
+			"bsonType": "string",
+			"description": "被回复的评论人name"
+		},
+		"is_like":{
+			"bsonType": "bool",
+			"description": "用户是否点赞",
+			"title": "用户是否点赞:",
+			"defaultValue":false
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "评论发表时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"create_ip": {
+			"bsonType": "string",
+			"description": "评论发表时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		}
+	},
+	"version": "0.0.1"
+}

@@ -1,0 +1,1 @@
+import{c as e,w as s,j as a,o,C as r}from"./index-DZJpiWpy.js";import{_ as t}from"./_plugin-vue_export-helper.BCo6x5W8.js";const n=t({},[["render",function(t,n){const d=a;return o(),e(d,null,{default:s((()=>[r("p",{class:"demo"},"media screen")])),_:1})}],["__scopeId","data-v-0b2f1769"]]);export{n as default};

@@ -1,0 +1,29 @@
+
+div[data-v-28f30113]{
+		width: 300px;
+		height: 200px;
+		background-color: pink;
+		color: aqua;
+}
+span[data-v-28f30113]{
+		background-color: chartreuse;
+		width: 100px;
+		height: 50px;
+		display: inline-block;
+}
+a[data-v-28f30113]{
+		text-decoration: none;
+		color: #fff;
+		background-color: bisque;
+		display: block;
+		width: 200px;	
+		height: 60px;
+		text-indent: 2em;
+		line-height: 60px;
+}
+a[data-v-28f30113]:hover{
+		background-color: orange;
+}
+p[data-v-28f30113]{
+		color: chartreuse !important;
+}
